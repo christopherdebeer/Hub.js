@@ -1,7 +1,6 @@
 
 var Hub = function(){
 	
-	var hub = this;
 	var items = {};
 	var debug = true;
 
