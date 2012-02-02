@@ -1,7 +1,7 @@
 
 var newHub = new Hub()
 
-newHub.setDebug(false)
+newHub.setDebug(true)
 
 newHub.set("user.name", "Christopher");
 

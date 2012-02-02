@@ -168,7 +168,7 @@ var Hub = function(){
 		setDebug: function(s) {
 			if (typeof s === 'undefined') s = true;
 			debug = s;
-			if (s) console.info("Hub.js > Debug set to true.");
+			console.info("Hub.js > Debug set to: ", s);
 		}
 	};
 	return Hub;
