@@ -65,7 +65,7 @@
 		myHub.addGetter("backgroundColour", function() {
 			
 			myHub.get("colour1", function(value){
-				myHub.set("backgroundColour", value);
+				myHub.set("backgroundColour", value)
 			})
 		})
 
@@ -79,7 +79,6 @@
 				var el = $(this).parent().find("input")
 				var item = el.attr("name")
 				var value = el.attr("value")
-				console.log("item click: ", item)
 				myHub.set(item, value)
 			})
 		})
