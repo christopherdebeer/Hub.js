@@ -31,6 +31,7 @@ var Hub = function(){
 					set: setter,
 					callbacks: [],
 					requires: {},
+					dependants: [],
 					lastGet: 0,
 					lastSet: 0
 				};
@@ -45,6 +46,7 @@ var Hub = function(){
 				if (requires instanceof Array) {
 					for (x in requires) {
 						items[item].requires[requires[x]] = true;
+						items[requires[x]].dependants.push(item);
 					}
 				} else {
 					throw new Error("Invalid require value for ["+item+"]. Accepts Array of Strings or String.")
@@ -73,7 +75,7 @@ var Hub = function(){
 					items[item].callbacks.push(callback);
 				
 				// if the value is not a promise
-				} else {
+				} else {					
 
 					// if this value has dependancies that are not met, then ask & wait
 					var requirements = items[item].requires;
@@ -88,6 +90,8 @@ var Hub = function(){
 
 					// this value has no unmet dependancies. then send
 					} else callback(items[item].value);
+
+					
 				}
 
 			// if the value is null and there is a getter, then ask and wait	
@@ -111,17 +115,34 @@ var Hub = function(){
 		},
 		set: function(item, value) {
 
+
 			if (undef(items[item])) {
 				Hub.newItem(item, value);
 			} else {
-				if (debug) console.log("notifying all callbacks of ["+item+"] of the value ["+value.toString()+"]");
-				for (cb in items[item].callbacks) {
-					if (debug) console.log("calling: ", items[item].callbacks[cb], " of ", item, " with ", value);
-					var call = items[item].callbacks[cb];
-					call(value);
-				}
-				items[item].value = value;
-				items[item].callbacks = [];
+				if (items[item].value !== value) {
+					items[item].value = value;
+
+					// calling this items setter is it exists
+					if (!undef(items[item].set)) items[item].set();
+
+					// notifying all dependants of the change
+					for (x in items[item].dependants) {
+						if (debug) console.log("Item being set ["+item+"] has a dependant: ", items[item].dependants[x]);
+						if (!undef(items[items[item].dependants[x]].get)) {
+							items[items[item].dependants[x]].get();
+						}
+					}
+
+					if (debug) console.log("notifying all callbacks of ["+item+"] of the value ["+value.toString()+"]");
+					for (cb in items[item].callbacks) {
+						if (debug) console.log("calling: ", items[item].callbacks[cb], " of ", item, " with ", value);
+						var call = items[item].callbacks[cb];
+						call(value);
+					}
+					items[item].callbacks = [];
+				} else {
+					if (debug) console.log("No change to value.");
+				}				
 			}
 			return true;		
 		},
