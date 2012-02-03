@@ -19,7 +19,7 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 	// create out instance
 	var myHub = new Hub()
 
-	// create an entiry and give it a value
+	// create an entity and give it a value
 	myHub.set("name", "Christopher")
 
 	// create an entity but with no value
