@@ -3,7 +3,9 @@
 <head>
 	<title>Hub.js | Example</title>
 	<script type="text/javascript" src="../hub.js"></script>
-	<script type="text/javascript" src="example.js"></script>
+	<!-- <script type="text/javascript" src="example.js"></script> -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
 	<style type="text/css">
 		html, body {
 			margin: 0;
@@ -15,6 +17,10 @@
 		}
 		a {color: #666;text-decoration: none; }
 		a:hover {text-decoration: none; color: #333;}
+		.split {
+			width: 50%;
+			float: left;	
+		}
 	</style>
 </head>
 <body>
@@ -23,5 +29,61 @@
 	<p>Most of what happens here, is in the code / console.</p>
 	<p><em><a href="http://twitter.com/christopherdb">@christopherdb</a></em></p>
 
+
+	<div>
+	<div class="split">
+		<div class="split">
+			<input type="text" value="red" name="colour1"/>
+			<a href="#" class="colour">Set</a>
+		</div>
+		<div class="split">
+			<input type="text" value="blue" name="colour2"/>
+			<a href="#"class="colour">Set</a>
+		</div>
+	</div>
+	<div class="split">
+		<div class="split">
+			<input type="text" value="green" name="colour3"/>
+			<a href="#" class="colour">Set</a>
+		</div>
+		<div class="split">
+			<input type="text" value="yellow" name="colour4"/>
+			<a href="#" class="colour">Set</a>
+		</div>
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		
+		var myHub = new Hub()
+
+		myHub.addSetter("backgroundColour", function(){
+			$("html, body").css("background-color", this.value)	
+		})
+
+		myHub.addRequirements("backgroundColour", "colour1")
+		myHub.addGetter("backgroundColour", function() {
+			
+			myHub.get("colour1", function(value){
+				myHub.set("backgroundColour", value);
+			})
+		})
+
+
+		myHub.dumpItems()
+
+		$(document).ready(function(){
+			
+			$(".colour").click(function(ev) {
+				ev.preventDefault()
+				var el = $(this).parent().find("input")
+				var item = el.attr("name")
+				var value = el.attr("value")
+				console.log("item click: ", item)
+				myHub.set(item, value)
+			})
+		})
+
+	</script>
 </body>
 </html>

@@ -45,8 +45,14 @@ var Hub = function(){
 				if (typeof requires === 'string') requires = [requires];
 				if (requires instanceof Array) {
 					for (x in requires) {
-						items[item].requires[requires[x]] = true;
-						items[requires[x]].dependants.push(item);
+						if (debug) console.log("looping through requires:", requires[x])
+						if (requires[x] !== "" && !undef(requires[x]) && requires[x] !== null) {
+							items[item].requires[requires[x]] = true;
+							if (undef(items[requires[x]])) Hub.newItem(requires[x]);
+							items[requires[x]].dependants.push(item);
+						} else {
+							if (debug) console.log("A require was null or undefined or ''.")
+						}
 					}
 				} else {
 					throw new Error("Invalid require value for ["+item+"]. Accepts Array of Strings or String.")
@@ -86,6 +92,7 @@ var Hub = function(){
 					if (req.length > 0) {
 						if (debug) console.log("The are unmet dependancies for ["+item+"] ie: outstanding promises, waiting for them: ", req);
 						items[item].callbacks.push(callback);
+						Hub.promise(item);
 						items[item].get();
 
 					// this value has no unmet dependancies. then send
@@ -98,6 +105,7 @@ var Hub = function(){
 			} else if (items[item].value === null && !undef(items[item].get)) {
 				
 				items[item].callbacks.push(callback);
+				Hub.promise(item);
 				items[item].get();
 
 			// if the item has a value but no getter, then send
@@ -105,17 +113,17 @@ var Hub = function(){
 
 		},
 		isPromise: function(item) {
-			if (undef(items[item])) throw new Error("Not such item ["+item+"] exists.");
+			if (undef(items[item])) throw new Error("No such item ["+item+"] exists.");
 			else return items[item].value instanceof Promise;
 		},
 		promise: function(item) {
-			if (undef(items[item])) throw new Error("Not such item ["+item+"] exists.");
+			if (undef(items[item])) throw new Error("No such item ["+item+"] exists.");
 			else items[item].value = new Promise();
 			return true;
 		},
 		set: function(item, value) {
 
-
+			if (debug) console.log("IS IT ME: ", item, " val: ", value)
 			if (undef(items[item])) {
 				Hub.newItem(item, value);
 			} else {
@@ -129,15 +137,17 @@ var Hub = function(){
 					for (x in items[item].dependants) {
 						if (debug) console.log("Item being set ["+item+"] has a dependant: ", items[item].dependants[x]);
 						if (!undef(items[items[item].dependants[x]].get)) {
+							if (debug) console.log("Notifying ["+items[item].dependants[x]+"] of the change.");
+							Hub.promise(items[item].dependants[x]);
 							items[items[item].dependants[x]].get();
+							if (debug) console.log("Just getting: ["+items[item].dependants[x]+"] does it have a getter? : ", !undef(items[items[item].dependants[x]].get))
 						}
 					}
 
-					if (debug) console.log("notifying all callbacks of ["+item+"] of the value ["+value.toString()+"]");
+					if (debug) console.log("Notifying all callbacks of ["+item+"] of the value ["+value.toString()+"]");
 					for (cb in items[item].callbacks) {
 						if (debug) console.log("calling: ", items[item].callbacks[cb], " of ", item, " with ", value);
-						var call = items[item].callbacks[cb];
-						call(value);
+						items[item].callbacks[cb](value);
 					}
 					items[item].callbacks = [];
 				} else {
@@ -189,7 +199,7 @@ var Hub = function(){
 		setDebug: function(s) {
 			if (typeof s === 'undefined') s = true;
 			debug = s;
-			console.info("Hub.js > Debug set to: ", s);
+			if (window.console) console.info("Hub.js > Debug set to: ", s);
 		}
 	};
 	return Hub;
