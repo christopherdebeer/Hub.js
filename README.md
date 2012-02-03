@@ -61,7 +61,7 @@ Getters and Setters have two possible assignment syntaxes:
 	myHub.addGetter("entity", options)
 
 	// or if you dont have any options other than the function then you can do
-	// this is how my "Setter" functions are done in the example given earlier
+	// this. See how my "Setter" functions are done in the example given earlier
 
 	myHub.addGetter("entity", function(){
 		// ...
