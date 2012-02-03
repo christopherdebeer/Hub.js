@@ -25,18 +25,16 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 	// create an entity but with no value
 	myHub.set("fullname")
 
-	// add requirements for that entity
-	myHub.addRequirements("fullname", ["name", "lastname"])
-
-	// describe how to get the value of that entity
-	myHub.addGetter("fullname", function() {
-		
-		myHub.get("name", function(name) {
-			myHub.get("lastname", function(lastname) {
-				myHub.set("fullname", name + " " + lastname)		
+	// describe how to get the value of that entity (including requirements)
+	myHub.addGetter("fullname", {
+		requires: ["name", "lastname"],
+		func: function() {		
+			myHub.get("name", function(name) {
+				myHub.get("lastname", function(lastname) {
+					myHub.set("fullname", name + " " + lastname)		
+				})
 			})
-		})
-
+		}
 	})
 
 	// when fullname changes I want to do this (ie: a setter): 
@@ -48,6 +46,26 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 	myHub.set("lastname", "de Beer")
 
 Note that in the above oversimplified example, I defined what `fullname` was, what it required and what to do with the value. But `lastname` on which it depended was never defined until the very end. The Idea that is `Hub.js` is that *when* `lastname` is finally defined everything else will do as it should.
+
+Getters and Setters have two possible assignment syntaxes:
+
+	// The one used above ie "entity" & {options}
+
+	var options = {
+		requires: ["another.entity", "..."]
+		func: function(){
+			// ...
+		}
+	}
+
+	myHub.addGetter("entity", options)
+
+	// or if you dont have any options other than the function then you can do
+	// this is how my "Setter" functions are done in the example given earlier
+
+	myHub.addGetter("entity", function(){
+		// ...
+	})
 
 But...!!?
 =========

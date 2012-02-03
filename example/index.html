@@ -64,15 +64,17 @@
 			$("html, body").css("background-color", this.value)	
 		})
 
-		myHub.addRequirements("backgroundColour", "colour1")
-		myHub.addGetter("backgroundColour", function() {
+		myHub.addGetter("backgroundColour", {
+			requires: ["colour1"],
+			func: function() {
 			
-			myHub.get("colour1", function(value){
-				myHub.set("backgroundColour", value)
-			})
+				myHub.get("colour1", function(value){
+					myHub.set("backgroundColour", value)
+				})
+			}
 		})
 
-		
+
 
 		// text colour definitions
 
@@ -80,12 +82,14 @@
 			$("html, body").css("color", this.value)	
 		})
 
-		myHub.addRequirements("textColour", "colour2")
-		myHub.addGetter("textColour", function() {
+		myHub.addGetter("textColour", {
+			requires: ["colour2"],
+			func: function() {
 			
-			myHub.get("colour2", function(value){
-				myHub.set("textColour", value)
-			})
+				myHub.get("colour2", function(value){
+					myHub.set("textColour", value)
+				})
+			}
 		})
 
 

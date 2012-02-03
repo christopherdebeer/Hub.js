@@ -40,9 +40,9 @@ var Hub = function(){
 			}
 		},
 		addRequirements: function(item, requires) {
-
-			if (!undef(items[item])) {
-				if (typeof requires === 'string') requires = [requires];
+			if (typeof requires === 'string') requires = [requires];
+			if (undef(items[item])) Hub.newItem(item, null);
+			if (!undef(items[item])) {				
 				if (requires instanceof Array) {
 					for (x in requires) {
 						if (debug) console.log("looping through requires:", requires[x])
@@ -156,12 +156,26 @@ var Hub = function(){
 			}
 			return true;		
 		},
-		addGetter: function (item, func, overide) {
+		addGetter: function (item, options) {
+
+			if (typeof options === "function") {
+				options.func = options
+			}
+
+			options["requires"] = options["requires"] || [];
+			options["overide"] = options["overide"] || false;
+
+			if (undef(options.func)) {
+				if (debug) console.log("No getter passed in options ie: addGetter('item', { func: function() { .... }})")
+				return false;
+			} 
+
 			if (!undef(items[item]) && !undef(items[item].get)) {
 
-				if (!undef(overide) && overide === true) {
+				if (!undef(options.overide) && options.overide === true) {
 					if (debug) console.log("Overiding getter for:", item);
-					items[item].get = func;
+					items[item].get = options.func;
+					Hub.addRequirements(item, options.requires)
 					return true;
 				} else {
 					if (debug) console.warn("There is already a getter set for that item ["+item+"]: ", items[item].get);
@@ -169,10 +183,12 @@ var Hub = function(){
 			 		return false;
 				}		 	
 			} else if (undef(items[item])) {
-				Hub.newItem(item, null, func);
+				Hub.newItem(item, null, options.func);
+				Hub.addRequirements(item, options.requires)
 				return true;
 			} else {
-				items[item].get = func;
+				items[item].get = options.func;
+				Hub.addRequirements(item, options.requires)
 				return true;
 			}
 		},
