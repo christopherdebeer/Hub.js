@@ -123,7 +123,6 @@ var Hub = function(){
 		},
 		set: function(item, value) {
 
-			if (debug) console.log("IS IT ME: ", item, " val: ", value)
 			if (undef(items[item])) {
 				Hub.newItem(item, value);
 			} else {

@@ -57,6 +57,9 @@
 		
 		var myHub = new Hub()
 
+
+		// background colour definitions
+
 		myHub.addSetter("backgroundColour", function(){
 			$("html, body").css("background-color", this.value)	
 		})
@@ -70,7 +73,25 @@
 		})
 
 
-		myHub.dumpItems()
+
+
+		// text colour definitions
+
+		myHub.addSetter("textColour", function(){
+			$("html, body").css("color", this.value)	
+		})
+
+		myHub.addRequirements("textColour", "colour2")
+		myHub.addGetter("textColour", function() {
+			
+			myHub.get("colour2", function(value){
+				myHub.set("textColour", value)
+			})
+		})
+
+
+		// for debugging
+		// myHub.dumpItems()
 
 		$(document).ready(function(){
 			
