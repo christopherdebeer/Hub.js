@@ -73,11 +73,11 @@ var Hub = function(){
 			// if the item has a value and a getter 
 			else if (items[item].value !== null && !undef(items[item].get)) {
 
-				if (debug) console.log("item had a val and a getter");
+				if (debug) console.log("Item ["+item+"] had a value ["+items[item].value+"] and a getter ["+items[item].get+"]");
 				
 				// if the value is a promise, then wait
 				if (items[item].value instanceof Promise) {
-					if (debug) console.log("busy getting I'll get back to you when it arrives");
+					if (debug) console.log("Already busy getting ["+item+"]. I'll get back to you when it arrives");
 					items[item].callbacks.push(callback);
 				
 				// if the value is not a promise
@@ -138,8 +138,9 @@ var Hub = function(){
 						if (!undef(items[items[item].dependants[x]].get)) {
 							if (debug) console.log("Notifying ["+items[item].dependants[x]+"] of the change.");
 							Hub.promise(items[item].dependants[x]);
-							items[items[item].dependants[x]].get();
-							if (debug) console.log("Just getting: ["+items[item].dependants[x]+"] does it have a getter? : ", !undef(items[items[item].dependants[x]].get))
+							items[items[item].dependants[x]].get();							
+						} else {
+							if (debug) console.warn("The dependant ["+items[item].dependants[x]+"] doesn't have a getter. ")
 						}
 					}
 
