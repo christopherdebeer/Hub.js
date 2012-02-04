@@ -59,11 +59,13 @@
 		
 		var myHub = new Hub()
 
+		myHub.setDebug(false);
+
 
 		// background colour definitions
 
-		myHub.addSetter("backgroundColour", function(){
-			$("html, body").css("background-color", this.value)	
+		myHub.addSetter("backgroundColour", function(bkgC){
+			$("html, body").css("background-color", bkgC)	
 		})
 
 		myHub.addGetter("backgroundColour", {
@@ -80,8 +82,8 @@
 
 		// text colour definitions
 
-		myHub.addSetter("textColour", function(){
-			$("html, body").css("color", this.value)	
+		myHub.addSetter("textColour", function(tC){
+			$("html, body").css("color", tC)	
 		})
 
 		myHub.addGetter("textColour", {
@@ -97,8 +99,8 @@
 
 		// link colour definitions
 
-		myHub.addSetter("linkColour", function() {
-			$("a").css("color", this.value);
+		myHub.addSetter("linkColour", function(l) {
+			$("a").css("color", l);
 		})
 
 		myHub.addGetter("linkColour", {
@@ -119,15 +121,15 @@
 			}
 		})
 
-		myHub.addSetter("allColours", function(){
-			console.log("Setter called for allColours() => this.value = ", this.value);
+		myHub.addSetter("allColours", function(aC){
+			console.log("Setter called for allColours() => aC = ", aC);
 
 			$("body").append("<h1><span class='colour1'>all colours</span> <span class='colour2'>have been</span> <span class='colour3'>set or</span> <span class='colour4'>updated...</span></h1>");
 
-			$(".colour1").css("color", this.value.colour1)
-			$(".colour2").css("color", this.value.colour2)
-			$(".colour3").css("color", this.value.colour3)
-			$(".colour4").css("color", this.value.colour4)
+			$(".colour1").css("color", aC.colour1)
+			$(".colour2").css("color", aC.colour2)
+			$(".colour3").css("color", aC.colour3)
+			$(".colour4").css("color", aC.colour4)
 		})
 
 

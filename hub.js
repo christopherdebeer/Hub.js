@@ -176,7 +176,7 @@ var Hub = function(){
 				if (debug) console.log("Checking for unmet requirements, ", x) 
 				if (Hub.isPromise(x)) req.push(x)
 			}
-			console.log("Item ["+item+"] has ("+ req.length.toString()+") unmet requires: ", req)
+			if (debug) console.log("Item ["+item+"] has ("+ req.length.toString()+") unmet requires: ", req)
 			return req;
 		},
 		set: function(item, value) {
@@ -264,12 +264,24 @@ var Hub = function(){
 				return true;
 			}
 		},
-		addSetter: function (item, func, overide) {
+		addSetter: function (item, options) {
+
+			if (__.isFunction(options)) {
+				options.func = options
+			}
+			options["overide"] = options["overide"] || false;
+
+			// wrap setter function such that its value is passed in
+
+			options.func = __.wrap(options.func, function(setter){
+				setter(items[item].value);
+			})
+
 			if (!__.isUndefined(items[item]) && !__.isUndefined(items[item].set)) {
 
 				if (!__.isUndefined(overide) && overide === true) {
 					if (debug) console.log("Overiding setter for:", item);
-					items[item].set = func;
+					items[item].set = options.func;
 					return true;
 				} else {
 					if (debug) console.warn("There is already a setter set for that item ["+item+"]: ", items[item].get);
@@ -277,10 +289,10 @@ var Hub = function(){
 			 		return false;
 				}		 	
 			} else if (__.isUndefined(items[item])) {
-				Hub.newItem(item, null, null, func);
+				Hub.newItem(item, null, null, options.func);
 				return true;
 			} else {
-				items[item].set = func;
+				items[item].set = options.func;
 				return true;
 			}
 		},

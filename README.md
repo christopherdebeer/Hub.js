@@ -26,20 +26,18 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 	myHub.set("fullname")
 
 	// describe how to get the value of that entity (including requirements)
+	// note: all declared requires are passed into your function as one object
 	myHub.addGetter("fullname", {
 		requires: ["name", "lastname"],
-		func: function() {		
-			myHub.get("name", function(name) {
-				myHub.get("lastname", function(lastname) {
-					myHub.set("fullname", name + " " + lastname)		
-				})
-			})
+		func: function(R) {		
+			myHub.set("fullname", R.name + " " + R.lastname)
 		}
 	})
 
-	// when fullname changes I want to do this (ie: a setter): 
-	myHub.addSetter("fullname", function(){
-		$("body h1").text("Hello, " + this.value)
+	// when fullname changes I want to do this (ie: a setter):
+	// note: the value is passed into the function automatically when called
+	myHub.addSetter("fullname", function(fN){
+		$("body h1").text("Hello, " + fN)
 	})
 
 	// set a new item
