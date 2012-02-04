@@ -52,6 +52,8 @@
 		</div>
 	</div>
 	</div>
+	<br><br><br>
+	<p><a href="#" class="dump">Dump</a> all items in Hub to console.</p>
 
 	<script type="text/javascript">
 		
@@ -93,8 +95,41 @@
 		})
 
 
-		// for debugging
-		// myHub.dumpItems()
+		// link colour definitions
+
+		myHub.addSetter("linkColour", function() {
+			$("a").css("color", this.value);
+		})
+
+		myHub.addGetter("linkColour", {
+			requires: ["colour3"],
+			func: function(requires) {
+				myHub.set("linkColour", requires.colour3)
+			}
+		})
+
+
+		// all colours set
+
+		myHub.addGetter("allColours", {
+			requires: ["colour1", "colour2", "colour3", "colour4"],
+			func: function(requires) {
+				console.log("allColours() called with: ", requires)
+				myHub.set("allColours", requires)
+			}
+		})
+
+		myHub.addSetter("allColours", function(){
+			console.log("Setter called for allColours() => this.value = ", this.value);
+
+			$("body").append("<h1><span class='colour1'>all colours</span> <span class='colour2'>have been</span> <span class='colour3'>set or</span> <span class='colour4'>updated...</span></h1>");
+
+			$(".colour1").css("color", this.value.colour1)
+			$(".colour2").css("color", this.value.colour2)
+			$(".colour3").css("color", this.value.colour3)
+			$(".colour4").css("color", this.value.colour4)
+		})
+
 
 		$(document).ready(function(){
 			
@@ -105,6 +140,12 @@
 				var value = el.attr("value")
 				myHub.set(item, value)
 			})
+
+			$(".dump").click(function(ev) {
+				ev.preventDefault()
+				myHub.dumpItems()
+			})
+
 		})
 
 	</script>
