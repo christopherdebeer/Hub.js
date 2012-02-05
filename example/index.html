@@ -17,19 +17,28 @@
 		}
 		a {color: #666;text-decoration: none; }
 		a:hover {text-decoration: none; color: #333;}
+		h1 {
+			background-color: black;
+			padding: 2px 5px;
+			color: white;
+		}
+		h1 em {font-weight: normal; font-size: 0.9em;}
+		h2 {font-weight: normal;}
 		.split {
 			width: 50%;
 			float: left;	
+		}
+		a {
+			background-color: black;
+			padding: 1px 5px;
 		}
 	</style>
 </head>
 <body>
 	
-	<h1>Hub.js</h1>
+	<h1> Hub.js <em>A paradigm looking for a purpose.</em></h1>
+	<h2>Example</h2>
 	<p>Most of what happens here, is in the code / console.</p>
-	<p><em><a href="http://twitter.com/christopherdb">@christopherdb</a></em></p>
-
-
 	<div>
 	<div class="split">
 		<div class="split">
@@ -53,7 +62,9 @@
 	</div>
 	</div>
 	<br><br><br>
-	<p><a href="#" class="dump">Dump</a> all items in Hub to console.</p>
+	<p><a href="#" class="dump">Dump</a> all items in <code>myHub()</code> to console.</p>
+	<div id="res"></div>
+	<p><em>by <a href="http://twitter.com/christopherdb">@christopherdb</a></em></p>
 
 	<script type="text/javascript">
 		
@@ -70,11 +81,8 @@
 
 		myHub.addGetter("backgroundColour", {
 			requires: ["colour1"],
-			func: function() {
-			
-				myHub.get("colour1", function(value){
-					myHub.set("backgroundColour", value)
-				})
+			func: function(r) {			
+				myHub.set("backgroundColour", r.colour1)				
 			}
 		})
 
@@ -88,11 +96,8 @@
 
 		myHub.addGetter("textColour", {
 			requires: ["colour2"],
-			func: function() {
-			
-				myHub.get("colour2", function(value){
-					myHub.set("textColour", value)
-				})
+			func: function(r) {			
+				myHub.set("textColour", r.colour2)
 			}
 		})
 
@@ -122,14 +127,8 @@
 		})
 
 		myHub.addSetter("allColours", function(aC){
-			console.log("Setter called for allColours() => aC = ", aC);
-
-			$("body").append("<h1><span class='colour1'>all colours</span> <span class='colour2'>have been</span> <span class='colour3'>set or</span> <span class='colour4'>updated...</span></h1>");
-
-			$(".colour1").css("color", aC.colour1)
-			$(".colour2").css("color", aC.colour2)
-			$(".colour3").css("color", aC.colour3)
-			$(".colour4").css("color", aC.colour4)
+			console.log("Setter called for allColours() => aC = ", aC)
+			$("#res").prepend("<h1><span style='color:"+aC.colour1+";'>all colors</span> <span style='color:"+aC.colour2+";'>have been</span> <span style='color:"+aC.colour3+";'>set or</span> <span style='color:"+aC.colour4+";'>updated...</span></h1>");
 		})
 
 
