@@ -15,7 +15,7 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 Usage
 -----
 
-*See ./example/index.html for an example for functional example*
+*See ./example/index.html for a functional example*
 
 Create an instance:
 
