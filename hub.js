@@ -102,6 +102,17 @@ var Hub = function(){
 			}
 			
 		},
+		update: function(item, callback) {
+			// forces an update (calls an items getter regardless of its current value)
+			// note: the callback will still only be called if/when the item is successfully updated/gotten
+			if (!__.isUndefined(items[item].get)) {
+				if (!__.isUndefined(callback)) items[item].callbacks.push(callback);
+				items[item].get();
+			} else {
+				console.warn("Item ["+item+"] does't exist at this moment in time.")
+			}
+				
+		},
 		get: function (item, callback) {
 
 
