@@ -71,3 +71,81 @@ But...!!?
 **Hub.js** is still just an Idea and there is a lot I couldnt exaplain just yet as not everything it will do is implemented yet. So bare with me.
 
 
+Methods
+========
+
+**get()**
+
+	myHub.get("entity", callback(value))
+
+**set()**
+
+	myHub.set("entity", value)
+
+**update()**
+
+	myHub.update("entity", callback(value))
+
+**addGetter()**
+
+	myHub.addGetter("entity", getter())
+
+	myHub.addGetter("entity", {
+		requires: ["other", "entities"],
+		overide: true, // optional
+		func: function(requirements) {}
+	})
+
+**addSetter()**
+
+	myHub.addSetter("entity", setter(value))
+
+	myHub.addSetter("entity", {
+		overide: false, // optional
+		func: function(value) {}
+	})
+
+**Other methods, used internally**
+
+These methods are primarily for internal use, but are exposed if one wanted to use them I've documented their, behaviour below.
+
+
+**newItem()**
+
+	myHub.newItem("entity", value, getter, setter, requires)
+
+**addRequirements()**
+	
+	// adds the passed entities as requirements of "entity"
+	// "entity"'s getter:
+	//		can only run if these are met/have a value
+	// 		and will be run when they are updated/set/changed
+	myHub.addRequirements("entity", ["these", "are", "required", "to", "Get", "theEntity"])
+
+**promise()**
+	
+	// turns "entity" into a promise
+	myHub.promise("entity")
+
+**isPromise()**
+	
+	// returns true or false
+	myHub.isPromise("entity")
+
+**unmetRequires()**
+	
+	// returns an array of entities that are either not set or still being processed. ie: they are promised.
+	// but on which "entity" is dependant.
+	myHub.unmetRequires("entity")
+
+**dumpItems()**
+
+	// dumps all the values/prperties/entities/fucntions of myHub() to the cosnole (for debugging)
+	myHub.dumpItems()
+
+**setDebug()**
+
+	myHub.setDebug(true) // accepts `true` or `false` defaults to true if no value is pased
+
+
+
