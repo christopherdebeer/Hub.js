@@ -12,7 +12,8 @@ Entities may have dependents or requirements (ie: they are dependents of other e
 
 The key paradigm is that Setter's and Getter's are independantly coded (self-contained) and can be worked on in isolation. Obviously if a given entity requires other entities then they aren't strictly self-contained. But they needn't be aware or even care *how* their requirements are met, only that they will be.
 
-**Usage**
+Usage
+-----
 
 *See ./example for an example*
 
@@ -72,7 +73,7 @@ But...!!?
 
 
 Methods
-========
+----------
 
 **get()**
 
@@ -105,7 +106,8 @@ Methods
 		func: function(value) {}
 	})
 
-**Other methods, used internally**
+Other methods, used internall
+---------------------------------
 
 These methods are primarily for internal use, but are exposed if one wanted to use them I've documented their, behaviour below.
 
