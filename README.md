@@ -15,7 +15,7 @@ The key paradigm is that Setter's and Getter's are independantly coded (self-con
 Usage
 -----
 
-*See ./example for an example*
+*See ./example/index.html for an example for functional example*
 
 	// create our instance
 	var myHub = new Hub()
@@ -44,27 +44,7 @@ Usage
 	// set a new item
 	myHub.set("lastname", "de Beer")
 
-Note that in the above oversimplified example, I defined what `fullname` was, what it required and what to do with the value. But `lastname` on which it depended was never defined until the very end. The Idea that is `Hub.js` is that *when* `lastname` is finally defined everything else will do as it should.
-
-Getters and Setters have two possible assignment syntaxes:
-
-	// The one used above ie "entity" & {options}
-
-	var options = {
-		requires: ["another.entity", "..."]
-		func: function(){
-			// ...
-		}
-	}
-
-	myHub.addGetter("entity", options)
-
-	// or if you dont have any options other than the function then you can do
-	// this. See how my "Setter" functions are done in the example given earlier
-
-	myHub.addGetter("entity", function(){
-		// ...
-	})
+Note that in the above oversimplified example, I defined what `fullname` was, what it required and what to do with the value. But `lastname` on which it depended was never defined until the very end. The Idea that is **Hub.js**, is that *when* `lastname` is finally defined everything else will do as it should.
 
 But...!!?
 =========
@@ -91,6 +71,8 @@ Methods
 
 	myHub.addGetter("entity", getter())
 
+	// or
+
 	myHub.addGetter("entity", {
 		requires: ["other", "entities"],
 		overide: true, // optional
@@ -100,6 +82,8 @@ Methods
 **addSetter()**
 
 	myHub.addSetter("entity", setter(value))
+
+	// or
 
 	myHub.addSetter("entity", {
 		overide: false, // optional
