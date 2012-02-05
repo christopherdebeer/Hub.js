@@ -101,15 +101,16 @@ These methods are primarily for internal use, but are exposed if one wanted to u
 
 
 **newItem()**
-
+	
+	// creates a new entity
 	myHub.newItem("entity", value, getter, setter, requires)
 
 **addRequirements()**
 	
 	// adds the passed entities as requirements of "entity"
 	// "entity"'s getter:
-	//		can only run if these are met/have a value
-	// 		and will be run when they are updated/set/changed
+	//	 - can only run if these are met/have a value
+	// 	 - and will be run when they are updated/set/changed
 	myHub.addRequirements("entity", ["these", "are", "required", "to", "Get", "theEntity"])
 
 **promise()**
@@ -134,8 +135,10 @@ These methods are primarily for internal use, but are exposed if one wanted to u
 	myHub.dumpItems()
 
 **setDebug()**
-
-	myHub.setDebug(true) // accepts `true` or `false` defaults to true if no value is pased
+	
+	// turns on Verbose logging of everything internal to Hub.js
+	// accepts `true` or `false` defaults to true if no value is passed
+	myHub.setDebug(true)
 
 
 
