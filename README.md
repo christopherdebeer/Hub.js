@@ -60,18 +60,26 @@ Methods
 ----------
 
 **get()**
+	
+Gets the value of an entity and passes it to your callback. If that entity is not available, every attempt will be made to make it so, and when it finally is, the callback will be called.
 
 	myHub.get("entity", callback(value))
 
 **set()**
+	
+Sets an entity. If no value is passed it will be set to `null`. Whenever an entity is `set` if it has a Setter and the value has actually changed, then teh setter function will be called with its value.
 
 	myHub.set("entity", value)
 
 **update()**
+	
+The same as `get()` but runs the getter even if there is a value already. ie: It may have changed due to some external source unknown to your `Hub()`. *Note: if it changed due to a dependancy this wouldn't be necessary*
 
 	myHub.update("entity", callback(value))
 
 **addGetter()**
+
+Defines **how** to get the value of an entity. If you pass in `requires` then you have decalred that this getter cannot run without knowing the required entities' values first.
 
 	myHub.addGetter("entity", getter())
 
@@ -84,6 +92,8 @@ Methods
 	})
 
 **addSetter()**
+	
+Defines a function that you want to be called **Whenever** that entity's value changes or is updated.
 
 	myHub.addSetter("entity", setter(value))
 
@@ -131,7 +141,7 @@ These methods are primarily for internal use, but are exposed if one wanted to u
 
 **dumpItems()**
 
-	// dumps all the values/prperties/entities/fucntions of myHub() to the cosnole (for debugging)
+	// dumps all the values/properties/entities/fucntions of myHub() to the console (for debugging)
 	myHub.dumpItems()
 
 **setDebug()**
