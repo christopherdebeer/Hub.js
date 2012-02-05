@@ -90,10 +90,10 @@ Methods
 		func: function(value) {}
 	})
 
-Other methods, used internall
+Other methods, used internally
 ---------------------------------
 
-These methods are primarily for internal use, but are exposed if one wanted to use them I've documented their, behaviour below.
+These methods are primarily for internal use, but are exposed if one wanted to use them I've documented their behaviour below.
 
 
 **newItem()**
