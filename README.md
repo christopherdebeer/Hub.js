@@ -17,8 +17,12 @@ Usage
 
 *See ./example/index.html for an example for functional example*
 
+Create an instance:
+
 	// create our instance
 	var myHub = new Hub()
+
+Then use it:
 
 	// create an entity and give it a value
 	myHub.set("name", "Christopher")
