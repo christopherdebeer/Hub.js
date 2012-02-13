@@ -1,16 +1,31 @@
 var Hub = require("../hub.js");
 
-var myHub = new Hub()
+var myHub = new Hub();
+myHub.setDebug(false);
 
-describe("Hub.js Client-side Standalone Test Suite", function(){
+describe("Hub.js Client-side Stand-alone Test Suite", function(){
 	
-	it('should return a instanceof Hub()')
+	it('should return a instanceof Hub()', function(done){
+		assert.ok(myHub instanceof Hub);
+		done();
+	})
 
-	it('should return true when setting an entity')
+	it('should return true when setting an entity', function(done){
+		assert.ok(myHub.set("name", "Christopher"));
+		done();
+	})
 
-	it('should return true when getting an entity')
+	it('should return true when getting an entity', function(done){
+		assert.ok(myHub.get("name", function(){}));
+		done();
+	})
 
-	it('should call the callback when getting an entity')
+	it('should call the callback with value when getting an entity', function(done){
+		myHub.get("name", function(x){
+			assert.equal(x,"Christopher");
+			done();
+		})
+	})
 
 	it('should call the Setter when the value is set (and changed)')
 
@@ -37,7 +52,7 @@ myHub.addGetter("fullname", {
 // when fullname changes I want to do this (ie: a setter):
 // note: the value is passed into the function automatically when called
 myHub.addSetter("fullname", function(fN){
-	$("body h1").text("Hello, " + fN)
+	//$("body h1").text("Hello, " + fN)
 })
 
 // set a new item
