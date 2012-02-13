@@ -1,4 +1,5 @@
-var Hub = require("../hub.js");
+var Hub 	= require("../hub.js"),
+	assert 	= requier('assert');
 
 var myHub = new Hub();
 myHub.setDebug(false);
