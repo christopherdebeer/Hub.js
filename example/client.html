@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Hub.js | Example</title>
-	<script type="text/javascript" src="../hub.js"></script>
+	<script type="text/javascript" src="http://localhost/dnode.js"></script>
+	<script type="text/javascript" src="http://localhost/hub/client.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 	<style type="text/css">
@@ -33,7 +34,7 @@
 		}
 	</style>
 </head>
-<body>
+<body id="bod">
 	
 	<h1> Hub.js <em>A paradigm looking for a purpose.</em></h1>
 	<h2>Example</h2>
@@ -131,6 +132,9 @@
 		})
 
 
+		myHub.set("ux.test", "setting a entity that resides on the server");
+
+
 		$(document).ready(function(){
 			
 			$(".colour").click(function(ev) {
@@ -139,11 +143,13 @@
 				var item = el.attr("name")
 				var value = el.attr("value")
 				myHub.set(item, value)
+				return false;
 			})
 
 			$(".dump").click(function(ev) {
 				ev.preventDefault()
 				myHub.dumpItems()
+				return false;
 			})
 
 		})
