@@ -329,7 +329,7 @@ var Hub = function(){
 		setDebug: function(s) {
 			if (__.isUndefined(s)) s = true;
 			debug = s;
-			if (window.console) console.info("Hub.js > Debug set to: ", s);
+			if (typeof window !== 'undefined' && window.console) console.info("Hub.js > Debug set to: ", s);
 		},
 		middleware: function(req, res, next) {
 			if (req && req.url === "/hub/client.js") {
