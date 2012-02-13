@@ -6,10 +6,10 @@ myHub.setDebug(false);
 
 describe("Hub.js", function(){
 	
-	it('should return a instanceof Hub()', function(done){
-		assert.ok(myHub instanceof Hub);
-		done();
-	})
+	// it('should return a instanceof Hub()', function(done){
+	// 	assert.ok(myHub instanceof Hub);
+	// 	done();
+	// })
 
 	it('should return true when setting an entity', function(done){
 		assert.ok(myHub.set("name", "Christopher"));
