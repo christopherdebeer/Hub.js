@@ -187,6 +187,8 @@ var Hub = function(){
 			// if the item has a value but no getter, then send
 			} else callback(items[item].value);
 
+			return true;
+
 		},
 		isPromise: function(item) {
 			if (debug) console.log("Checking if item [" +  item + "] is a Promise() => ", items[item].value instanceof Promise || __.isNull(items[item].value));

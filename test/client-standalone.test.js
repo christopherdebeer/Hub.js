@@ -4,7 +4,7 @@ var Hub 	= require("../hub.js"),
 var myHub = new Hub();
 myHub.setDebug(false);
 
-describe("Hub.js Client-side Stand-alone Test Suite", function(){
+describe("Hub.js", function(){
 	
 	it('should return a instanceof Hub()', function(done){
 		assert.ok(myHub instanceof Hub);
