@@ -2,6 +2,8 @@ Hub.js
 ------
 *A paradigm looking for a purpose*
 
+[![Build Status](https://secure.travis-ci.org/christopherdebeer/Hub.js.png)](http://travis-ci.org/christopherdebeer/Hub.js)
+
 This is a thought experiment, I'm not sure where I'm going with it or what it *should* do. But everything seems to be going well.
 
 **What is it**
